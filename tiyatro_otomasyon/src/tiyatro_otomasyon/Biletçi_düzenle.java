@@ -4,17 +4,93 @@
  */
 package tiyatro_otomasyon;
 
-/**
- *
- * @author safaoflas
- */
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 public class Biletçi_düzenle extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Biletçi_düzenle
-     */
+   public void biletci_getir(){
+   
+       Connection connection=null;
+       DbHelper helper = new DbHelper();
+       Statement statement =null;
+       ResultSet resultSet;
+       
+          try{
+            
+            connection =helper.getConnnection();
+            statement =connection.createStatement();
+            resultSet =statement.executeQuery("SELECT * from biletci");
+            while(resultSet.next()){
+            jComboBox2.addItem(resultSet.getString("B_AD"));
+            String a= jComboBox2.getSelectedItem().toString();
+           
+            }
+            
+        } catch(SQLException exception){
+            helper.showErrorMessage(exception);
+            
+        }
+        finally{
+             try {
+                 connection.close();
+             } catch (SQLException ex) {
+                
+             }
+        }
+   }
+   
+   public void verileri_getir(){
+   Connection connection =null;
+        DbHelper helper =new DbHelper();
+        Statement statement=null;
+        ResultSet resultSet ;
+        ResultSet resultSet1;
+        try{
+            
+            connection =helper.getConnnection();
+            statement =connection.createStatement();
+            String a=jComboBox2.getSelectedItem().toString();
+            resultSet1 =statement.executeQuery("SELECT * from biletci WHERE B_AD='"+a+"'");
+            while(resultSet1.next()){
+                
+            
+           
+            jTextField1.setText(resultSet1.getString("B_AD"));
+            jTextField2.setText(resultSet1.getString("B_TELEFON"));
+            jTextField8.setText(resultSet1.getString("B_MAAS"));
+            datePicker1.setText(resultSet1.getString("B_BASLANGIC"));
+            jTextField7.setText(resultSet1.getString("B_IZIN"));
+            jTextField6.setText(resultSet1.getString("B_ADRES"));
+            
+            
+   
+     }
+            
+        } catch(SQLException exception){
+            helper.showErrorMessage(exception);
+            
+        }
+        finally{
+             try {
+                 connection.close();
+             } catch (SQLException ex) {
+                
+             }
+        }
+        
+   
+   
+   
+   
+   
+   }
     public Biletçi_düzenle() {
         initComponents();
+        biletci_getir();
     }
 
     /**
@@ -39,20 +115,22 @@ public class Biletçi_düzenle extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField8 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(159, 198, 248));
-        jPanel1.setToolTipText("");
         jPanel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jPanel1.setToolTipText("");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Biletçi Düzenle");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,6 +194,15 @@ public class Biletçi_düzenle extends javax.swing.JFrame {
 
         jLabel7.setText("Adres:");
 
+        jButton1.setText("İptal");
+
+        jButton2.setText("Kaydet");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -123,25 +210,33 @@ public class Biletçi_düzenle extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField6)
-                    .addComponent(jTextField1))
-                .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                            .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextField6)
+                            .addComponent(jTextField1)
+                            .addComponent(datePicker1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addGap(64, 64, 64))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,7 +261,7 @@ public class Biletçi_düzenle extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel6)
@@ -176,7 +271,11 @@ public class Biletçi_düzenle extends javax.swing.JFrame {
                                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel7)))
                             .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(jButton2))
+                        .addGap(0, 61, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -200,16 +299,14 @@ public class Biletçi_düzenle extends javax.swing.JFrame {
         );
 
         jPanel1.getAccessibleContext().setAccessibleName("Biletçi Düzenle\n");
-        jPanel1.getAccessibleContext().setAccessibleDescription("");
-        jPanel1.getAccessibleContext().setAccessibleParent(null);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
-
-        yaz();
+    verileri_getir();
+        
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -217,9 +314,31 @@ public class Biletçi_düzenle extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+      DataBaseConnection dataBaseConnection =new DataBaseConnection();
+      String ad_soyad=jTextField1.getText();
+        String telefon=jTextField2.getText();         
+        int maas=Integer.parseInt(jTextField8.getText());
+        String is_baslangic_tarih=datePicker1.getText();
+        int izin_sayisi=Integer.parseInt(jTextField7.getText());
+        String adres=jTextField6.getText();
+        String ad_sec=jComboBox2.getSelectedItem().toString();
+        
+        dataBaseConnection.biletci_duzenle(ad_soyad, telefon, maas, is_baslangic_tarih, izin_sayisi, adres, ad_sec);
+        
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField8.setText("");
+        datePicker1.setText("");
+        jTextField7.setText("");
+        jTextField6.setText("");
+        
+        
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -253,6 +372,9 @@ public class Biletçi_düzenle extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.github.lgooddatepicker.components.DatePicker datePicker1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -267,7 +389,6 @@ public class Biletçi_düzenle extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;

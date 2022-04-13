@@ -81,5 +81,27 @@ public class DataBaseConnection {
 
         }
     }
+    
+    public void biletci_duzenle(String ad_soyad ,String telefon,int maas,String is_baslangic_tarih,int izin_sayisi,String adres,String ad_sec) {
+        try {            
+            Connection con = getDataBaseConnection();
+            PreparedStatement pst = null;           
+            pst = (PreparedStatement) con.prepareStatement("UPDATE biletci SET B_AD=?,B_TELEFON=?,B_MAAS=?,B_BASLANGIC=?,B_IZIN=?,B_ADRES=? WHERE B_AD=?" ) ;
+            pst.setString(1, ad_soyad);
+            pst.setString(2, telefon);   
+            pst.setInt(3, maas);
+            pst.setString(4,is_baslangic_tarih);
+            pst.setInt(5, izin_sayisi);
+            pst.setString(6, adres);   
+            pst.setString(7, ad_sec);
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Bağlanılamadı");
+        }
+    }
+    
+    
+    
 
 }
