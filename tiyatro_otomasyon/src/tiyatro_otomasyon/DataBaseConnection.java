@@ -101,7 +101,22 @@ public class DataBaseConnection {
         }
     }
     
-    
+      public void biletci_sil(String biletci_ad) {
+        try {            
+            Connection con = getDataBaseConnection();
+            PreparedStatement pst = null;           
+            pst = (PreparedStatement) con.prepareStatement  ("DELETE FROM biletci WHERE B_AD = ? ");
+           
+             
+            pst.setString(1, biletci_ad); 
+            
+            
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Bağlanılamadı");
+        }
+    }
     
 
 }

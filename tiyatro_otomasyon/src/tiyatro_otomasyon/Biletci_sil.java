@@ -3,18 +3,54 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package tiyatro_otomasyon;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
  * @author safaoflas
  */
 public class Biletci_sil extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Biletci_sil
-     */
+    
+    public void biletci_listele(){
+     Connection connection =null;
+        DbHelper helper =new DbHelper();
+        Statement statement=null;
+        ResultSet resultSet ;
+        try{
+            
+            connection =helper.getConnnection();
+            statement =connection.createStatement();
+            resultSet =statement.executeQuery("SELECT B_AD from biletci");
+            while(resultSet.next()){
+            jComboBox1.addItem(resultSet.getString("B_AD"));
+                
+            }
+            
+        } catch(SQLException exception){
+            helper.showErrorMessage(exception);
+            
+        }
+        finally{
+             try {
+                 connection.close();
+             } catch (SQLException ex) {
+                 
+             }
+    
+    
+    
+    
+    
+    
+    }
+    
+    }
     public Biletci_sil() {
         initComponents();
+        biletci_listele();
     }
 
     /**
@@ -161,7 +197,10 @@ public class Biletci_sil extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
+        
+        
+        
+        jTextField1.setText(jComboBox1.getSelectedItem().toString());
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -173,11 +212,15 @@ public class Biletci_sil extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-
-        DBConnection dBConnection = new DBConnection();
+        DataBaseConnection dataBaseConnection = new DataBaseConnection();
         String biletci_ad=jTextField1.getText();
-        dBConnection.biletci_sil(biletci_ad);
+        dataBaseConnection.biletci_sil(biletci_ad);
+        jComboBox1.removeItem(jComboBox1.getSelectedItem());
+        jTextField1.setText("");
+       
+       
+
+        
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
