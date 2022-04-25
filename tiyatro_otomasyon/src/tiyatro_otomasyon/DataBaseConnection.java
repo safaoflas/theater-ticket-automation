@@ -117,6 +117,19 @@ public class DataBaseConnection {
             System.out.println("Bağlanılamadı");
         }
     }
+        public void salon_ekle(String salonAd ,int kapasite) {
+        try {            
+            Connection con = getDataBaseConnection();
+            PreparedStatement pst = null;           
+            pst = (PreparedStatement) con.prepareStatement("INSERT INTO salon(AD,KAPASITE) VALUES(?,?)");
+            pst.setString(1, salonAd);
+            pst.setInt(2, kapasite);            
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Bağlanılamadı");
+        }
+    }
     
 
 }
