@@ -3,18 +3,74 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package tiyatro_otomasyon;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author safaoflas
- */
 public class Salon_Düzenle extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Salon_Düzenle
-     */
+    public void salon_listele(){
+        Connection connection =null;
+        DbHelper helper =new DbHelper();
+        Statement statement=null;
+        ResultSet resultSet ;
+        try{
+            
+            connection =helper.getConnnection();
+            statement =connection.createStatement();
+            resultSet =statement.executeQuery("SELECT KAPASITE,AD from salon");
+            while(resultSet.next()){
+            jComboBox1.addItem(resultSet.getString("AD"));
+                
+            }
+            
+        } catch(SQLException exception){
+            helper.showErrorMessage(exception);
+            
+        }
+        finally{
+             try {
+                 connection.close();
+             } catch (SQLException ex) {
+                
+             }
+        }
+}
+    public void yaz(){
+         Connection connection =null;
+        DbHelper helper =new DbHelper();
+        Statement statement=null;
+        ResultSet resultSet ;
+        ResultSet resultSet1;
+        try{
+            
+            connection =helper.getConnnection();
+            statement =connection.createStatement();
+            String a=jComboBox1.getSelectedItem().toString();
+            resultSet1 =statement.executeQuery("SELECT * from salon WHERE AD='"+a+"'");
+            while(resultSet1.next()){
+            jTextField2.setText(resultSet1.getString("KAPASITE"));        
+            }           
+        } catch(SQLException exception){
+            helper.showErrorMessage(exception);            
+        }
+        finally{
+             try {
+                 connection.close();
+             } catch (SQLException ex) {
+                 
+             }
+        }
+    
+    }
+    
+    
     public Salon_Düzenle() {
         initComponents();
+        salon_listele();
     }
 
     /**
@@ -189,6 +245,14 @@ public class Salon_Düzenle extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+         DataBaseConnection dataBaseConnection = new DataBaseConnection();
+       String salon_ad=jTextField1.getText();
+       int salon_kapasite=Integer.parseInt(jTextField2.getText());
+       String salon_sec=jComboBox1.getSelectedItem().toString();
+      dataBaseConnection.salon_duzenle(salon_ad,salon_kapasite,salon_sec);
+      jTextField1.setText("");
+      jTextField2.setText("");
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

@@ -130,6 +130,21 @@ public class DataBaseConnection {
             System.out.println("Bağlanılamadı");
         }
     }
+        public void salon_duzenle(String salon_ad,int salon_kapasite,String salon_sec ) {
+        try {            
+            Connection con = getDataBaseConnection();
+            PreparedStatement pst = null;           
+            pst = (PreparedStatement) con.prepareStatement("UPDATE salon SET AD = ?,KAPASITE=? WHERE AD = ? ");
+            pst.setString(1,salon_ad);
+            pst.setInt(2,salon_kapasite);
+            pst.setString(3, salon_sec);
+                   
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Bağlanılamadı");
+        }
+    }
     
 
 }
