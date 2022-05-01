@@ -3,18 +3,48 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package tiyatro_otomasyon;
-
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author safaoflas
  */
 public class Salon_Sİl extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Salon_Sİl
-     */
+public void test(){
+        Connection connection =null;
+        DbHelper helper =new DbHelper();
+        Statement statement=null;
+        ResultSet resultSet ;
+        try{
+            
+            connection =helper.getConnnection();
+            statement =connection.createStatement();
+            resultSet =statement.executeQuery("SELECT KAPASITE,AD from salon");
+            while(resultSet.next()){
+            jComboBox1.addItem(resultSet.getString("AD"));
+                
+            }
+            
+        } catch(SQLException exception){
+            helper.showErrorMessage(exception);
+            
+        }
+        finally{
+             try {
+                 connection.close();
+             } catch (SQLException ex) {
+        
+             }
+        }
+    }
+    
     public Salon_Sİl() {
         initComponents();
+        test();
     }
 
     /**
@@ -93,6 +123,11 @@ public class Salon_Sİl extends javax.swing.JFrame {
         });
 
         jButton2.setText("Sil ve Kaydet");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -149,6 +184,10 @@ public class Salon_Sİl extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        
+    jTextField1.setText(jComboBox1.getSelectedItem().toString());
+
+       
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -158,6 +197,13 @@ public class Salon_Sİl extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        DataBaseConnection  dataBaseConnection = new DataBaseConnection();
+        String salon_ad=jTextField1.getText();
+          dataBaseConnection.salon_sil(salon_ad);
+          jTextField1.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

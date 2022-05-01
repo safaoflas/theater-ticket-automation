@@ -146,5 +146,18 @@ public class DataBaseConnection {
         }
     }
     
+     public void salon_sil(String salon_ad) {
+        try {            
+            Connection con = getDataBaseConnection();
+            PreparedStatement pst = null;           
+            pst = (PreparedStatement) con.prepareStatement("DELETE FROM salon WHERE AD = ? ");
+            pst.setString(1,salon_ad);
+                   
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Bağlanılamadı");
+        }
+    }
 
 }
