@@ -160,4 +160,17 @@ public class DataBaseConnection {
         }
     }
 
+      public void seans_ekle(String saat ) {
+        try {            
+            Connection con = getDataBaseConnection();
+            PreparedStatement pst = null;           
+            pst = (PreparedStatement) con.prepareStatement("INSERT INTO seans(SEANS_SAATI) VALUES(?)");
+            pst.setString(1,saat);
+                   
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Bağlanılamadı");
+        }
+    }
 }
