@@ -173,4 +173,19 @@ public class DataBaseConnection {
             System.out.println("Bağlanılamadı");
         }
     }
+      public void seans_duzenle(String seans_saati,String seans_saati2 ) {
+        try {            
+            Connection con = getDataBaseConnection();
+            PreparedStatement pst = null;           
+            pst = (PreparedStatement) con.prepareStatement("UPDATE seans SET SEANS_SAATI = ? WHERE SEANS_SAATI = ? ");
+            pst.setString(1,seans_saati);
+            pst.setString(2,seans_saati2);
+                   
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Bağlanılamadı");
+        }
+    }
+   
 }

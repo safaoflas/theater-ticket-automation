@@ -3,6 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package tiyatro_otomasyon;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JTextField;
 
 /**
  *
@@ -10,11 +15,41 @@ package tiyatro_otomasyon;
  */
 public class Seans_Düzenle extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Seans_Düzenle
-     */
+    public void seans(){
+        Connection connection =null;
+        DbHelper helper =new DbHelper();
+        Statement statement=null;
+        ResultSet resultSet =null;
+        ResultSet resultSet1=null;
+        try{
+            
+            connection =helper.getConnnection();
+            statement =connection.createStatement();
+            
+            resultSet1 =statement.executeQuery("SELECT SEANS_SAATI from seans");
+            while(resultSet1.next()){
+            
+            jComboBox1.addItem(resultSet1.getString("SEANS_SAATI"));
+           
+            }
+            
+        } catch(SQLException exception){
+            helper.showErrorMessage(exception);
+            
+        }
+        finally{
+             try {
+                 connection.close();
+             } catch (SQLException ex) {
+                 
+             }
+        }
+      }
+    
+    
     public Seans_Düzenle() {
         initComponents();
+        seans();
     }
 
     /**
@@ -63,6 +98,11 @@ public class Seans_Düzenle extends javax.swing.JFrame {
         jLabel4.setText("Seçilen Seans Saati");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seanslar", " " }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,6 +113,11 @@ public class Seans_Düzenle extends javax.swing.JFrame {
         jButton1.setText("İptal");
 
         jButton2.setText("Kaydet");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -158,6 +203,21 @@ public class Seans_Düzenle extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+     jTextField1.setText(jComboBox1.getSelectedItem().toString()); 
+     jTextField2.setText(jComboBox1.getSelectedItem().toString()); 
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+     DataBaseConnection dataBaseConnection = new DataBaseConnection();
+     String seans_saati=jTextField2.getText();
+     String seans_saati2=jTextField1.getText();
+
+     dataBaseConnection.seans_duzenle(seans_saati, seans_saati2);
+
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
