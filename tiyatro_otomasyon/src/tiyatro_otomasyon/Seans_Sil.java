@@ -3,18 +3,48 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package tiyatro_otomasyon;
-
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 /**
  *
  * @author safaoflas
  */
 public class Seans_Sil extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Seans_Sil
-     */
+   public void seans(){
+        Connection connection =null;
+        DbHelper helper =new DbHelper();
+        Statement statement=null;
+        ResultSet resultSet =null;
+        ResultSet resultSet1=null;
+        try{
+            
+            connection =helper.getConnnection();
+            statement =connection.createStatement();
+            
+            resultSet1 =statement.executeQuery("SELECT SEANS_SAATI from seans");
+            while(resultSet1.next()){
+            
+            jComboBox1.addItem(resultSet1.getString("SEANS_SAATI"));
+            }
+            
+        } catch(SQLException exception){
+            helper.showErrorMessage(exception);
+            
+        }
+        finally{
+             try {
+                 connection.close();
+             } catch (SQLException ex) {
+                 
+             }
+        }
+      }
     public Seans_Sil() {
         initComponents();
+        seans();
     }
 
     /**
@@ -76,10 +106,20 @@ public class Seans_Sil extends javax.swing.JFrame {
         jLabel3.setText("Silinecek Seans Saati");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seanslar", " " }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("İptal");
 
         jButton2.setText("Sil ve Kaydet");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -90,7 +130,7 @@ public class Seans_Sil extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -137,6 +177,20 @@ public class Seans_Sil extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+     jTextField1.setText(jComboBox1.getSelectedItem().toString());
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        DataBaseConnection dataBaseConnection =new DataBaseConnection();
+        String seans_saati = jTextField1.getText();
+        dataBaseConnection.seans_sil(seans_saati);
+
+
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

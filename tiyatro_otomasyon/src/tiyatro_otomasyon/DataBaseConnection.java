@@ -187,5 +187,18 @@ public class DataBaseConnection {
             System.out.println("Bağlanılamadı");
         }
     }
+      public void seans_sil(String seans_saati ) {
+        try {            
+            Connection con = getDataBaseConnection();
+            PreparedStatement pst = null;           
+            pst = (PreparedStatement) con.prepareStatement("DELETE FROM seans WHERE SEANS_SAATI = ? ");
+            pst.setString(1,seans_saati);
+                   
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Bağlanılamadı");
+        }
+    }
    
 }
