@@ -3,18 +3,82 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package tiyatro_otomasyon;
-
+import com.mysql.jdbc.PreparedStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author safaoflas
  */
 public class Oyun_Ekle extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Oyun_Ekle
-     */
+    
+    public void test(){
+        Connection connection =null;
+        DbHelper helper =new DbHelper();
+        Statement statement=null;
+        ResultSet resultSet ;
+        try{
+            
+            connection =helper.getConnnection();
+            statement =connection.createStatement();
+            resultSet =statement.executeQuery("SELECT KAPASITE,AD from salon");
+            while(resultSet.next()){
+            jComboBox2.addItem(resultSet.getString("AD"));
+                
+            }
+            
+        } catch(SQLException exception){
+            helper.showErrorMessage(exception);
+            
+        }
+        finally{
+             try {
+                 connection.close();
+             } catch (SQLException ex) {
+                 
+             }
+        }
+}
+      public void seans(){
+        Connection connection =null;
+        DbHelper helper =new DbHelper();
+        Statement statement=null;
+        ResultSet resultSet =null;
+        ResultSet resultSet1=null;
+        try{
+            
+            connection =helper.getConnnection();
+            statement =connection.createStatement();
+            
+            resultSet1 =statement.executeQuery("SELECT SEANS_SAATI from seans");
+            while(resultSet1.next()){
+            
+            jComboBox1.addItem(resultSet1.getString("SEANS_SAATI"));
+            }
+            
+        } catch(SQLException exception){
+            helper.showErrorMessage(exception);
+            
+        }
+        finally{
+             try {
+                 connection.close();
+             } catch (SQLException ex) {
+                 
+             }
+        }
+      }
+    
+    
     public Oyun_Ekle() {
         initComponents();
+        test();
+        seans();
     }
 
     /**
@@ -63,6 +127,11 @@ public class Oyun_Ekle extends javax.swing.JFrame {
         jButton1.setText("İptal");
 
         jButton2.setText("Kaydet");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -142,6 +211,20 @@ public class Oyun_Ekle extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        DataBaseConnection dataBaseConnection = new DataBaseConnection();
+        String salon_ad=jComboBox2.getSelectedItem().toString();
+        String seans_saati=jComboBox1.getSelectedItem().toString();
+        String oyun_ad=jTextField1.getText();
+        dataBaseConnection.oyun_ekle(salon_ad,seans_saati,oyun_ad);
+        jTextField1.setText("");
+        
+
+
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

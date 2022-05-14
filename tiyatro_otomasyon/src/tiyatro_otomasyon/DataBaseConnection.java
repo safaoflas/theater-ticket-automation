@@ -201,4 +201,19 @@ public class DataBaseConnection {
         }
     }
    
+     public void oyun_ekle(String salon_ad,String seans_saati,String oyun_ad) {
+        try {            
+            Connection con = getDataBaseConnection();
+            PreparedStatement pst = null;           
+            pst = (PreparedStatement) con.prepareStatement("INSERT INTO oyun(SALON_AD,SEANS_SAATI,OYUN_AD) VALUES(?,?,?)");
+            pst.setString(1,salon_ad);
+            pst.setString(2, seans_saati);   
+            pst.setString(3, oyun_ad); 
+            
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Bağlanılamadı");
+        }
+    }
 }
