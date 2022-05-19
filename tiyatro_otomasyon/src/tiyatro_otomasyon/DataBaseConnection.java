@@ -216,4 +216,21 @@ public class DataBaseConnection {
             System.out.println("Bağlanılamadı");
         }
     }
+      public void oyun_duzenle(String salon_ad,String seans_saati,String oyun_ad,String oyun_ad_sec) {
+        try {            
+            Connection con = getDataBaseConnection();
+            PreparedStatement pst = null;           
+            pst = (PreparedStatement) con.prepareStatement  ("UPDATE oyun SET OYUN_AD = ?  WHERE SALON_AD = ? AND SEANS_SAATI = ? ");
+           
+            pst.setString(2,salon_ad);
+            pst.setString(3, seans_saati);   
+            pst.setString(1, oyun_ad); 
+            
+            
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Bağlanılamadı");
+        }
+    }
 }
