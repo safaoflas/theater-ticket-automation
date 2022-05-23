@@ -233,4 +233,21 @@ public class DataBaseConnection {
             System.out.println("Bağlanılamadı");
         }
     }
+      public void oyun_sil(String oyun_ad) {
+        try {            
+            Connection con = getDataBaseConnection();
+            PreparedStatement pst = null;           
+            pst = (PreparedStatement) con.prepareStatement  ("DELETE FROM oyun WHERE OYUN_AD = ? ");
+           
+             
+            pst.setString(1, oyun_ad); 
+            
+            
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Bağlanılamadı");
+        }
+    }
 }
+

@@ -4,17 +4,47 @@
  */
 package tiyatro_otomasyon;
 
-/**
- *
- * @author safaoflas
- */
-public class Oyun_Sİl extends javax.swing.JFrame {
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-    /**
-     * Creates new form Oyun_Sİl
-     */
+public class Oyun_Sİl extends javax.swing.JFrame {
+    public void oyun_sil(){
+        Connection connection =null;
+        DbHelper helper =new DbHelper();
+        Statement statement=null;
+        ResultSet resultSet =null;
+        ResultSet resultSet1=null;
+        try{
+            
+            connection =helper.getConnnection();
+            statement =connection.createStatement();
+            
+            resultSet1 =statement.executeQuery("SELECT OYUN_AD from oyun");
+            while(resultSet1.next()){
+            
+            jComboBox1.addItem(resultSet1.getString("OYUN_AD"));
+            }
+            
+        } catch(SQLException exception){
+            helper.showErrorMessage(exception);
+            
+        }
+        finally{
+             try {
+                 connection.close();
+             } catch (SQLException ex) {
+                 
+             }
+        }
+      }
+
     public Oyun_Sİl() {
         initComponents();
+        oyun_sil();
     }
 
     /**
@@ -54,6 +84,11 @@ public class Oyun_Sİl extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jList1);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Silinecek Oyunu Seçin" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Oyun İsmi");
 
@@ -138,36 +173,26 @@ public class Oyun_Sİl extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        
+        DataBaseConnection dataBaseConnection = new DataBaseConnection();
+        String oyun_ad=jTextField1.getText();
+        dataBaseConnection.oyun_sil(oyun_ad);
+        jTextField1.setText("");
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setText(jComboBox1.getSelectedItem().toString());
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Oyun_Sİl.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Oyun_Sİl.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Oyun_Sİl.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Oyun_Sİl.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
