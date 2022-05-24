@@ -4,6 +4,8 @@
  */
 package tiyatro_otomasyon;
 
+import javax.swing.ButtonGroup;
+
 /**
  *
  * @author safaoflas
@@ -15,6 +17,16 @@ public class Müşteri_Bİlgileri extends javax.swing.JFrame {
      */
     public Müşteri_Bİlgileri() {
         initComponents();
+        jRadioButton1.setActionCommand("e");
+        jRadioButton2.setActionCommand("k");
+        jRadioButton3.setActionCommand("t");
+        jRadioButton4.setActionCommand("o");
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(jRadioButton1);
+        bg.add(jRadioButton2);
+         ButtonGroup bg2 = new ButtonGroup();
+        bg2.add(jRadioButton3);
+        bg2.add(jRadioButton4);
     }
 
     /**
@@ -52,9 +64,9 @@ public class Müşteri_Bİlgileri extends javax.swing.JFrame {
         jTextField7 = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,6 +138,11 @@ public class Müşteri_Bİlgileri extends javax.swing.JFrame {
         jButton1.setText("İptal");
 
         jButton2.setText("Kaydet");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -167,8 +184,8 @@ public class Müşteri_Bİlgileri extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jRadioButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(81, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -221,7 +238,7 @@ public class Müşteri_Bİlgileri extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -284,6 +301,34 @@ public class Müşteri_Bİlgileri extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField8ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        jRadioButton1.setActionCommand("erkek");
+        jRadioButton2.setActionCommand("kadın");
+        jRadioButton3.setActionCommand("tam");
+        jRadioButton4.setActionCommand("öğrenci");
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(jRadioButton1);
+        bg.add(jRadioButton2);
+         ButtonGroup bg2 = new ButtonGroup();
+        bg2.add(jRadioButton3);
+        bg2.add(jRadioButton4);
+        DataBaseConnection dataBaseConnection = new DataBaseConnection();
+        String m_ad_soyad =jTextField1.getText();
+        String m_cep=jTextField2.getText();
+        String m_mail=jTextField6.getText();
+        String m_okul=bg.getSelection().getActionCommand();
+        String m_cinsiyet=bg2.getSelection().getActionCommand();  
+        int ucret=Integer.parseInt(jTextField8.getText());
+        String m_koltuk=jTextField3.getText();
+        String salon_ad=jTextField4.getText();
+        String seans_saati=jTextField5.getText();
+        String oyun_ad=jTextField7.getText();
+        String tarih=datePicker1.getText();
+        
+        dataBaseConnection.musteri_ekle(m_ad_soyad, m_cep, m_mail, m_okul, m_cinsiyet, ucret, m_koltuk, salon_ad, seans_saati, oyun_ad, tarih);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -320,6 +365,7 @@ public class Müşteri_Bİlgileri extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.github.lgooddatepicker.components.DatePicker datePicker1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -348,6 +394,5 @@ public class Müşteri_Bİlgileri extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }

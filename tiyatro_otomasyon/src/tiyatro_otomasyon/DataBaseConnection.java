@@ -249,5 +249,32 @@ public class DataBaseConnection {
             System.out.println("Bağlanılamadı");
         }
     }
+       public void musteri_ekle(String m_ad_soyad ,String m_cep,String m_mail,String m_okul,String m_cinsiyet,int ucret,String m_koltuk,String salon_ad,String seans_saati,String oyun_ad,String tarih) {
+        try {            
+            Connection con = getDataBaseConnection();
+            PreparedStatement pst = null;           
+            pst = (PreparedStatement) con.prepareStatement("INSERT INTO musteriler(M_AD_SOYAD,M_CEP,M_MAIL,M_OKUL,M_CINSIYET,UCRET,M_KOLTUK,SALON_AD,SEANS_SAATI,OYUN_AD,TARIH) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+            pst.setString(1, m_ad_soyad);
+            pst.setString(2, m_cep);    
+            pst.setString(3, m_mail);
+            pst.setString(4, m_okul);
+            pst.setString(5, m_cinsiyet);
+            pst.setInt(6,ucret); 
+            pst.setString(7, m_koltuk);
+            pst.setString(8, salon_ad);
+            pst.setString(9, seans_saati);
+            pst.setString(10, oyun_ad);
+            pst.setString(11, tarih);
+            
+            
+            
+            
+            
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Bağlanılamadı");
+        }
+    }
 }
 
