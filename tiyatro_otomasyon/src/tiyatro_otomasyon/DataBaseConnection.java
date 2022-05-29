@@ -276,11 +276,12 @@ public class DataBaseConnection {
             System.out.println("Bağlanılamadı");
         }
     }
-        public void musteri_duzenle(String m_ad_soyad ,String m_cep,String m_mail,String m_okul,String m_cinsiyet,int ucret,String m_koltuk,String salon_ad,String seans_saati,String oyun_ad,String tarih) {
+        public void musteri_duzenle(String m_ad_soyad ,String m_cep,String m_mail,String m_okul,String m_cinsiyet,int ucret,String m_koltuk,String salon_ad,String seans_saati,String oyun_ad,String tarih,String koltuk_sec) {
         try {            
             Connection con = getDataBaseConnection();
             PreparedStatement pst = null;           
-            pst = (PreparedStatement) con.prepareStatement("UPDATE musteriler SET (M_AD_SOYAD,M_CEP,M_MAIL,M_OKUL,M_CINSIYET,UCRET,M_KOLTUK,SALON_AD,SEANS_SAATI,OYUN_AD,TARIH) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+            pst = (PreparedStatement) con.prepareStatement("UPDATE musteriler SET M_AD_SOYAD,=?,M_CEP,=?,M_MAIL=?,M_OKUL=?,M_CINSIYET=?,UCRET=?,M_KOLTUK=?,SALON_AD=?,SEANS_SAATI=?,OYUN_AD=?,TARIH=? WHERE M_KOLTUK=?");
+            
             pst.setString(1, m_ad_soyad);
             pst.setString(2, m_cep);    
             pst.setString(3, m_mail);
@@ -292,7 +293,7 @@ public class DataBaseConnection {
             pst.setString(9, seans_saati);
             pst.setString(10, oyun_ad);
             pst.setString(11, tarih);
-            
+            pst.setString(12, koltuk_sec);
             
             
             
@@ -303,5 +304,6 @@ public class DataBaseConnection {
             System.out.println("Bağlanılamadı");
         }
         }
+        
 }
 
