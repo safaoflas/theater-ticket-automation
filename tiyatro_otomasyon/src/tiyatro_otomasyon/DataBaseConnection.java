@@ -304,6 +304,25 @@ public class DataBaseConnection {
             System.out.println("Bağlanılamadı");
         }
         }
+         public void admin_ekle(String ad_soyad, String telefon, int maas, String is_baslangic_tarih, int izin_sayisi, String adres) {
+
+        try {
+            Connection con = getDataBaseConnection();
+            PreparedStatement pst = null;
+            pst = (PreparedStatement) con.prepareStatement("INSERT INTO admin(A_AD,A_TELEFON,A_MAAS,A_BASLANGIC,A_IZIN,A_ADRES) VALUES(?,?,?,?,?,?)");
+            pst.setString(1, ad_soyad);
+            pst.setString(2, telefon);
+            pst.setInt(3, maas);
+            pst.setString(4, is_baslangic_tarih);
+            pst.setInt(5, izin_sayisi);
+            pst.setString(6, adres);
+            pst.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Bağlanılamadı");
+
+        }
+    }
         
 }
 
