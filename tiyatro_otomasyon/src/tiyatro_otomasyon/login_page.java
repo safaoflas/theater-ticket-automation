@@ -15,6 +15,7 @@ public class login_page extends javax.swing.JFrame {
      */
     public login_page() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -161,6 +162,11 @@ public class login_page extends javax.swing.JFrame {
       String dbSifre =dataBaseConnection.kullanici_kontrol(jTextField1.getText());
       if (String.valueOf(jPasswordField1.getPassword()).equals(dbSifre)) {
           jLabel4.setText("Kullanıcı Girişi Başarılı");
+          dispose();
+          AnaSayfa anaSayfa = new AnaSayfa();
+          anaSayfa.setVisible(true);
+        
+          
       }
       else{
           jLabel4.setText("Kullanıcı adı ya da şifre hatalı");
