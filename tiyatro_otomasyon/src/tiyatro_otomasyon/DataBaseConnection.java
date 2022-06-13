@@ -324,9 +324,11 @@ public class DataBaseConnection {
         }
     }
 
+
     void musteri_duzenle(String m_ad_soyad, String m_cep, String m_mail, String m_okul, String m_cinsiyet, int ucret, String m_koltuk, String salon_ad, String seans_saati, String oyun_ad, String tarih) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
         
 }
 
