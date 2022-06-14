@@ -242,6 +242,7 @@ public class Oyun_Ekle extends javax.swing.JFrame {
         dispose();        
     }//GEN-LAST:event_jButton3ActionPerformed
 
+
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -249,6 +250,7 @@ public class Oyun_Ekle extends javax.swing.JFrame {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
 
     /**
      * @param args the command line arguments
